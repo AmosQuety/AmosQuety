@@ -108,11 +108,11 @@ A Python package that generates structured comments and docstrings for functions
 ---
 
 ## 📊 GitHub Analytics
+![Stats](https://github-readme-stats.vercel.app/api?username=AmosQuety&show_icons=true&theme=radical&hide_border=true&cache_seconds=86400)
 
-![Stats](https://github-readme-stats.vercel.app/api?username=AmosQuety&show_icons=true&theme=radical&hide_border=true)
-![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=AmosQuety&layout=compact&theme=radical&hide_border=true)
+![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=AmosQuety&layout=compact&theme=radical&hide_border=true&cache_seconds=86400)
+
 ![Streak](https://streak-stats.demolab.com/?user=AmosQuety&theme=radical&hide_border=true)
-
 ---
 
 ## 🏆 Achievements
