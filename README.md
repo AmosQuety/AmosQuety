@@ -1,6 +1,6 @@
 # 💫 About Me
 
-Hi, I'm Nabasa Amos — a full-stack developer passionate about building scalable web and mobile applications and exploring the intersection of software and intelligence.
+Hi, I'm Nabasa Amos (Amos Quety) — a full-stack developer passionate about building scalable web and mobile applications and exploring the intersection of software and intelligence.
 
 ---
 
