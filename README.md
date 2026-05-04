@@ -1,32 +1,49 @@
 # 💫 About Me
 
-Hi, I'm Nabasa Amos (Amos Quety) — a full-stack developer passionate about building scalable web and mobile applications and exploring the intersection of software and intelligence.
+Hi, I'm **Nabasa Amos (Amos Quety)** — a full-stack software engineer focused on building scalable, low-bandwidth-friendly systems and intelligent applications.
+
+I’m the creator of  **Xemora**, **AuthHub** and **PyCodeCommenter** a Python package that automatically generates meaningful comments and docstrings to improve code readability and maintainability.
+
+I enjoy working at the intersection of **software engineering, data, and AI**, with a long-term vision of building impactful, scalable solutions.
 
 ---
 
-## 🔭 Currently Working On
-- Developing full-stack web and mobile apps using **React**, **React Native**, and **Node.js**
-- Integrating **MongoDB**, **Firebase**, and **AWS** into dynamic applications
-- Exploring **AI/ML applications** in web development
+## 🚀 What I’m Building
 
-## 🌱 Currently Learning
-- Advanced **AI/ML** concepts with **TensorFlow** and **PyTorch**
-- **Cloud architecture** on **AWS** and **Google Cloud**
-- ~~PHP~~ (Reluctantly powering through 😅)
+- Full-stack web and mobile applications using **React**, **React Native**, and **Node.js**
+- Intelligent systems integrating **AI/ML** into real-world applications
+- Developer tools and automation solutions (like **PyCodeCommenter**)
 
-## 👯 Looking to Collaborate On
-- Innovative full-stack projects
-- AI-powered applications
-- Open-source contributions that make a difference
+---
 
-## 💬 Ask Me About
-- React / React Native development
-- Firebase and MongoDB integrations
-- Full-stack architecture and deployment
-- Data science fundamentals
+## 🌱 Current Focus Areas
 
-## ⚡ Fun Fact
-I’m endlessly curious about new technologies — even if **PHP** occasionally tests my patience! 💪
+- Advanced **AI/ML** (TensorFlow, PyTorch)
+- **Scalable system design** and low-bandwidth optimization
+- **Cloud architecture** (AWS & Google Cloud)
+
+---
+
+## 👯 Open to Collaborate On
+
+- High-impact full-stack applications  
+- AI-powered systems and tools  
+- Open-source projects with real-world utility  
+
+---
+
+## 💬 Expertise
+
+- Frontend & mobile: React, React Native, Next.js  
+- Backend: Node.js, Express, Flask  
+- Databases: MongoDB, Firebase  
+- Applied AI & data-driven systems  
+
+---
+
+## ⚡ Insight
+
+I’m driven by solving real-world problems with technology — especially in environments where **performance, scalability, and bandwidth efficiency matter most**.
 
 ---
 
@@ -35,11 +52,24 @@ I’m endlessly curious about new technologies — even if **PHP** occasionally 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/nabasa-amos)  
 [![X](https://img.shields.io/badge/X-000000?style=for-the-badge&logo=x&logoColor=white)](https://x.com/amosnabasa7)  
 
+---
+
+## 🧠 Featured Project
+
+### 🔹 PyCodeCommenter
+A Python package that generates structured comments and docstrings for functions and classes.
+
+- Improves code readability and maintainability  
+- Built for developers who value clean, self-documented code  
+- Designed with extensibility in mind  
 
 ---
 
-## 🚀 Portfolio
-🔗 [nabasa-amos.netlify.app](https://nabasa-amos.netlify.app)
+## 🌍 Portfolio
+
+🔗 https://nabasa-amos.netlify.app  
+
+> Explore my projects, experiments, and technical journey.
 
 ---
 
@@ -64,7 +94,6 @@ I’m endlessly curious about new technologies — even if **PHP** occasionally 
 ### Databases
 ![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white)
 ![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)
-![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
 
 ### AI/ML
 ![TensorFlow](https://img.shields.io/badge/TensorFlow-FF6F00?style=for-the-badge&logo=tensorflow&logoColor=white)
@@ -78,22 +107,20 @@ I’m endlessly curious about new technologies — even if **PHP** occasionally 
 
 ---
 
-## 📊 GitHub Stats
+## 📊 GitHub Analytics
 
 ![Stats](https://github-readme-stats.vercel.app/api?username=AmosQuety&show_icons=true&theme=radical&hide_border=true)
-
 ![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=AmosQuety&layout=compact&theme=radical&hide_border=true)
-
 ![Streak](https://streak-stats.demolab.com/?user=AmosQuety&theme=radical&hide_border=true)
 
 ---
 
-## 🏆 GitHub Trophies
+## 🏆 Achievements
 
 ![Trophies](https://github-profile-trophy.vercel.app/?username=AmosQuety&theme=radical&no-frame=true&no-bg=true)
 
 ---
 
-## 👀 Visitors
+## 👀 Profile Views
 
 ![Visitor Count](https://visitcount.itsvg.in/api?id=AmosQuety&icon=5&color=0)
