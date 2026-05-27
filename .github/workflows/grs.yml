@@ -13,6 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GH_STATS_TOKEN: ${{ secrets.GH_STATS_TOKEN }}
+      GH_STATS_BASE_URL: ${{ secrets.GH_STATS_BASE_URL }}
     steps:
       - uses: actions/checkout@v5
         with:
@@ -24,8 +25,14 @@ jobs:
           set -euo pipefail
           mkdir -p profile
 
-          stats_url="https://github-readme-stats.vercel.app/api?username=${{ github.repository_owner }}&show_icons=true&theme=radical&hide_border=true&cache_seconds=86400"
-          langs_url="https://github-readme-stats.vercel.app/api/top-langs/?username=${{ github.repository_owner }}&layout=compact&theme=radical&hide_border=true&cache_seconds=86400"
+          if [ -z "${GH_STATS_BASE_URL:-}" ]; then
+            echo "GH_STATS_BASE_URL secret is required and should point to your self-hosted GitHub Readme Stats instance." >&2
+            exit 1
+          fi
+
+          stats_base_url="${GH_STATS_BASE_URL%/}"
+          stats_url="${stats_base_url}/api?username=${{ github.repository_owner }}&show_icons=true&theme=radical&hide_border=true&cache_seconds=86400"
+          langs_url="${stats_base_url}/api/top-langs/?username=${{ github.repository_owner }}&layout=compact&theme=radical&hide_border=true&cache_seconds=86400"
 
           if [ -n "${GH_STATS_TOKEN:-}" ]; then
             stats_url="${stats_url}&token=${GH_STATS_TOKEN}"

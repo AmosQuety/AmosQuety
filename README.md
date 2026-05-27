@@ -113,6 +113,8 @@ A Python package that generates structured comments and docstrings for functions
 [![Top Langs](./profile/top-langs.svg)](https://github.com/anuraghazra/github-readme-stats)
 
 [![Streak](./profile/streak.svg)](https://github.com/DenverCoder1/github-readme-streak-stats)
+
+The Stats and Top Langs cards are generated from the self-hosted GitHub Readme Stats endpoint configured in `GH_STATS_BASE_URL`.
 ---
 
 ## 🏆 Achievements
