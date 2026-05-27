@@ -14,6 +14,8 @@ jobs:
     env:
       GH_STATS_TOKEN: ${{ secrets.GH_STATS_TOKEN }}
       GH_STATS_BASE_URL: ${{ secrets.GH_STATS_BASE_URL }}
+      API_TOKEN: ${{ secrets.GH_STATS_TOKEN || github.token }}
+      GITHUB_OWNER: ${{ github.repository_owner }}
     steps:
       - uses: actions/checkout@v5
         with:
@@ -42,17 +44,38 @@ jobs:
           curl -fsSL --retry 5 --retry-all-errors --retry-delay 5 --connect-timeout 15 "${stats_url}" -o profile/stats.svg || printf '%s\n' '<svg xmlns="http://www.w3.org/2000/svg" width="495" height="195" viewBox="0 0 495 195" role="img"><rect width="495" height="195" rx="16" fill="#0f172a"/><text x="32" y="62" fill="#e2e8f0" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700">GitHub Stats</text><text x="32" y="98" fill="#94a3b8" font-family="Segoe UI, Arial, sans-serif" font-size="15">Stats card temporarily unavailable.</text></svg>' > profile/stats.svg
           curl -fsSL --retry 5 --retry-all-errors --retry-delay 5 --connect-timeout 15 "${langs_url}" -o profile/top-langs.svg || printf '%s\n' '<svg xmlns="http://www.w3.org/2000/svg" width="495" height="195" viewBox="0 0 495 195" role="img"><rect width="495" height="195" rx="16" fill="#0f172a"/><text x="32" y="62" fill="#e2e8f0" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700">Top Languages</text><text x="32" y="98" fill="#94a3b8" font-family="Segoe UI, Arial, sans-serif" font-size="15">Language breakdown temporarily unavailable.</text></svg>' > profile/top-langs.svg
           curl -fsSL --retry 5 --retry-all-errors --retry-delay 5 --connect-timeout 15 "https://streak-stats.demolab.com/?user=${{ github.repository_owner }}&theme=radical&hide_border=true" -o profile/streak.svg || printf '%s\n' '<svg xmlns="http://www.w3.org/2000/svg" width="495" height="195" viewBox="0 0 495 195" role="img"><rect width="495" height="195" rx="16" fill="#0f172a"/><text x="32" y="62" fill="#e2e8f0" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700">GitHub Streak</text><text x="32" y="98" fill="#94a3b8" font-family="Segoe UI, Arial, sans-serif" font-size="15">Streak card temporarily unavailable.</text></svg>' > profile/streak.svg
-          trophies_url="https://github-profile-trophy.vercel.app/?username=${{ github.repository_owner }}&theme=radical&no-frame=true&no-bg=true"
+          # Generate a simple trophies SVG locally using the GitHub API so we don't rely on external trophy services
           tmpfile="$(mktemp)"
-          if curl -fsSL --retry 5 --retry-all-errors --retry-delay 5 --connect-timeout 15 "$trophies_url" -o "$tmpfile"; then
+          if python3 - <<'PY' > "$tmpfile"
+import os,sys,json,urllib.request
+owner=os.environ.get('GITHUB_OWNER')
+token=os.environ.get('API_TOKEN')
+if not owner:
+    sys.exit(2)
+req=urllib.request.Request(f"https://api.github.com/users/{owner}")
+req.add_header('User-Agent','github-actions-trophy-generator')
+if token:
+    req.add_header('Authorization',f'token {token}')
+try:
+    with urllib.request.urlopen(req,timeout=15) as r:
+        user=json.load(r)
+except Exception:
+    sys.exit(1)
+followers=user.get('followers',0)
+public_repos=user.get('public_repos',0)
+name=user.get('login',owner)
+svg=f'''<svg xmlns="http://www.w3.org/2000/svg" width="495" height="120" viewBox="0 0 495 120" role="img"><rect width="495" height="120" rx="16" fill="#0f172a"/><text x="24" y="40" fill="#e2e8f0" font-family="Segoe UI, Arial, sans-serif" font-size="20" font-weight="700">GitHub Trophies</text><text x="24" y="72" fill="#94a3b8" font-family="Segoe UI, Arial, sans-serif" font-size="16">{name} • Followers: {followers} • Public repos: {public_repos}</text></svg>'''
+print(svg)
+PY
+          then
             mv "$tmpfile" profile/trophies.svg
           else
             if [ -f profile/trophies.svg ]; then
-              echo "Warning: trophy service unavailable; keeping existing profile/trophies.svg" >&2
+              echo "Warning: trophy generator failed; keeping existing profile/trophies.svg" >&2
+              rm -f "$tmpfile"
             else
-              printf '%s\n' '<svg xmlns="http://www.w3.org/2000/svg" width="495" height="195" viewBox="0 0 495 195" role="img"><rect width="495" height="195" rx="16" fill="#0f172a"/><text x="32" y="62" fill="#e2e8f0" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700">GitHub Trophies</text><text x="32" y="98" fill="#94a3b8" font-family="Segoe UI, Arial, sans-serif" font-size="15">Trophy card temporarily unavailable.</text></svg>' > profile/trophies.svg
+              printf '%s\n' '<svg xmlns="http://www.w3.org/2000/svg" width="495" height="120" viewBox="0 0 495 120" role="img"><rect width="495" height="120" rx="16" fill="#0f172a"/><text x="24" y="40" fill="#e2e8f0" font-family="Segoe UI, Arial, sans-serif" font-size="20" font-weight="700">GitHub Trophies</text><text x="24" y="72" fill="#94a3b8" font-family="Segoe UI, Arial, sans-serif" font-size="16">Trophy data temporarily unavailable.</text></svg>' > profile/trophies.svg
             fi
-            rm -f "$tmpfile"
           fi
           curl -fsSL --retry 5 --retry-all-errors --retry-delay 5 --connect-timeout 15 "https://komarev.com/ghpvc/?username=${{ github.repository_owner }}&color=0e75b6" -o profile/visitor-count.svg || printf '%s\n' '<svg xmlns="http://www.w3.org/2000/svg" width="495" height="195" viewBox="0 0 495 195" role="img"><rect width="495" height="195" rx="16" fill="#0f172a"/><text x="32" y="62" fill="#e2e8f0" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700">Visitor Count</text><text x="32" y="98" fill="#94a3b8" font-family="Segoe UI, Arial, sans-serif" font-size="15">Profile views badge temporarily unavailable.</text></svg>' > profile/visitor-count.svg
 
