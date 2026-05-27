@@ -24,41 +24,6 @@ jobs:
           set -euo pipefail
           mkdir -p profile
 
-          write_placeholder() {
-            local output_file="$1"
-            local title="$2"
-            local subtitle="$3"
-
-            cat > "$output_file" <<EOF
-<svg xmlns="http://www.w3.org/2000/svg" width="495" height="195" viewBox="0 0 495 195" role="img" aria-labelledby="title desc">
-  <title>$title</title>
-  <desc>$subtitle</desc>
-  <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#0f172a" />
-      <stop offset="100%" stop-color="#111827" />
-    </linearGradient>
-  </defs>
-  <rect width="495" height="195" rx="16" fill="url(#bg)" />
-  <rect x="16" y="16" width="463" height="163" rx="12" fill="none" stroke="#334155" stroke-width="2" />
-  <text x="32" y="62" fill="#e2e8f0" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700">$title</text>
-  <text x="32" y="98" fill="#94a3b8" font-family="Segoe UI, Arial, sans-serif" font-size="15">$subtitle</text>
-  <text x="32" y="142" fill="#38bdf8" font-family="Segoe UI, Arial, sans-serif" font-size="13">Will refresh on the next successful workflow run.</text>
-</svg>
-EOF
-          }
-
-          download_card() {
-            local url="$1"
-            local output_file="$2"
-            local title="$3"
-            local subtitle="$4"
-
-            if ! curl -fsSL --retry 5 --retry-all-errors --retry-delay 5 --connect-timeout 15 "$url" -o "$output_file"; then
-              write_placeholder "$output_file" "$title" "$subtitle"
-            fi
-          }
-
           stats_url="https://github-readme-stats.vercel.app/api?username=${{ github.repository_owner }}&show_icons=true&theme=radical&hide_border=true&cache_seconds=86400"
           langs_url="https://github-readme-stats.vercel.app/api/top-langs/?username=${{ github.repository_owner }}&layout=compact&theme=radical&hide_border=true&cache_seconds=86400"
 
@@ -67,11 +32,11 @@ EOF
             langs_url="${langs_url}&token=${GH_STATS_TOKEN}"
           fi
 
-          download_card "${stats_url}" profile/stats.svg "GitHub Stats" "Stats card temporarily unavailable."
-          download_card "${langs_url}" profile/top-langs.svg "Top Languages" "Language breakdown temporarily unavailable."
-          download_card "https://streak-stats.demolab.com/?user=${{ github.repository_owner }}&theme=radical&hide_border=true" profile/streak.svg "GitHub Streak" "Streak card temporarily unavailable."
-          download_card "https://github-profile-trophy.vercel.app/?username=${{ github.repository_owner }}&theme=radical&no-frame=true&no-bg=true" profile/trophies.svg "GitHub Trophies" "Trophy card temporarily unavailable."
-          download_card "https://komarev.com/ghpvc/?username=${{ github.repository_owner }}&color=0e75b6" profile/visitor-count.svg "Visitor Count" "Profile views badge temporarily unavailable."
+          curl -fsSL --retry 5 --retry-all-errors --retry-delay 5 --connect-timeout 15 "${stats_url}" -o profile/stats.svg || printf '%s\n' '<svg xmlns="http://www.w3.org/2000/svg" width="495" height="195" viewBox="0 0 495 195" role="img"><rect width="495" height="195" rx="16" fill="#0f172a"/><text x="32" y="62" fill="#e2e8f0" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700">GitHub Stats</text><text x="32" y="98" fill="#94a3b8" font-family="Segoe UI, Arial, sans-serif" font-size="15">Stats card temporarily unavailable.</text></svg>' > profile/stats.svg
+          curl -fsSL --retry 5 --retry-all-errors --retry-delay 5 --connect-timeout 15 "${langs_url}" -o profile/top-langs.svg || printf '%s\n' '<svg xmlns="http://www.w3.org/2000/svg" width="495" height="195" viewBox="0 0 495 195" role="img"><rect width="495" height="195" rx="16" fill="#0f172a"/><text x="32" y="62" fill="#e2e8f0" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700">Top Languages</text><text x="32" y="98" fill="#94a3b8" font-family="Segoe UI, Arial, sans-serif" font-size="15">Language breakdown temporarily unavailable.</text></svg>' > profile/top-langs.svg
+          curl -fsSL --retry 5 --retry-all-errors --retry-delay 5 --connect-timeout 15 "https://streak-stats.demolab.com/?user=${{ github.repository_owner }}&theme=radical&hide_border=true" -o profile/streak.svg || printf '%s\n' '<svg xmlns="http://www.w3.org/2000/svg" width="495" height="195" viewBox="0 0 495 195" role="img"><rect width="495" height="195" rx="16" fill="#0f172a"/><text x="32" y="62" fill="#e2e8f0" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700">GitHub Streak</text><text x="32" y="98" fill="#94a3b8" font-family="Segoe UI, Arial, sans-serif" font-size="15">Streak card temporarily unavailable.</text></svg>' > profile/streak.svg
+          curl -fsSL --retry 5 --retry-all-errors --retry-delay 5 --connect-timeout 15 "https://github-profile-trophy.vercel.app/?username=${{ github.repository_owner }}&theme=radical&no-frame=true&no-bg=true" -o profile/trophies.svg || printf '%s\n' '<svg xmlns="http://www.w3.org/2000/svg" width="495" height="195" viewBox="0 0 495 195" role="img"><rect width="495" height="195" rx="16" fill="#0f172a"/><text x="32" y="62" fill="#e2e8f0" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700">GitHub Trophies</text><text x="32" y="98" fill="#94a3b8" font-family="Segoe UI, Arial, sans-serif" font-size="15">Trophy card temporarily unavailable.</text></svg>' > profile/trophies.svg
+          curl -fsSL --retry 5 --retry-all-errors --retry-delay 5 --connect-timeout 15 "https://komarev.com/ghpvc/?username=${{ github.repository_owner }}&color=0e75b6" -o profile/visitor-count.svg || printf '%s\n' '<svg xmlns="http://www.w3.org/2000/svg" width="495" height="195" viewBox="0 0 495 195" role="img"><rect width="495" height="195" rx="16" fill="#0f172a"/><text x="32" y="62" fill="#e2e8f0" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700">Visitor Count</text><text x="32" y="98" fill="#94a3b8" font-family="Segoe UI, Arial, sans-serif" font-size="15">Profile views badge temporarily unavailable.</text></svg>' > profile/visitor-count.svg
 
       - name: Commit cards
         shell: bash
