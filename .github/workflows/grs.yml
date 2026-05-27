@@ -1,0 +1,52 @@
+name: Update README cards
+
+on:
+  schedule:
+    - cron: "0 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      GH_STATS_TOKEN: ${{ secrets.GH_STATS_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Download profile cards
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p profile
+
+          stats_url="https://github-readme-stats.vercel.app/api?username=${{ github.repository_owner }}&show_icons=true&theme=radical&hide_border=true&cache_seconds=86400"
+          langs_url="https://github-readme-stats.vercel.app/api/top-langs/?username=${{ github.repository_owner }}&layout=compact&theme=radical&hide_border=true&cache_seconds=86400"
+
+          if [ -n "${GH_STATS_TOKEN:-}" ]; then
+            stats_url="${stats_url}&token=${GH_STATS_TOKEN}"
+            langs_url="${langs_url}&token=${GH_STATS_TOKEN}"
+          fi
+
+          curl -fsSL "${stats_url}" -o profile/stats.svg
+          curl -fsSL "${langs_url}" -o profile/top-langs.svg
+          curl -fsSL "https://streak-stats.demolab.com/?user=${{ github.repository_owner }}&theme=radical&hide_border=true" -o profile/streak.svg
+          curl -fsSL "https://github-profile-trophy.vercel.app/?username=${{ github.repository_owner }}&theme=radical&no-frame=true&no-bg=true" -o profile/trophies.svg
+          curl -fsSL "https://visitcount.itsvg.in/api?id=${{ github.repository_owner }}&icon=5&color=0" -o profile/visitor-count.svg
+
+      - name: Commit cards
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add profile/*.svg
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git commit -m "Update README cards"
+          git push
