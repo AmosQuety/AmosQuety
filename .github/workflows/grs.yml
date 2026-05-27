@@ -48,7 +48,7 @@ jobs:
           curl -fsSL --retry 5 --retry-all-errors --retry-delay 5 --connect-timeout 15 "https://komarev.com/ghpvc/?username=${{ github.repository_owner }}&color=0e75b6" -o profile/visitor-count.svg || printf '%s\n' '<svg xmlns="http://www.w3.org/2000/svg" width="495" height="195" viewBox="0 0 495 195" role="img"><rect width="495" height="195" rx="16" fill="#0f172a"/><text x="32" y="62" fill="#e2e8f0" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700">Visitor Count</text><text x="32" y="98" fill="#94a3b8" font-family="Segoe UI, Arial, sans-serif" font-size="15">Profile views badge temporarily unavailable.</text></svg>' > profile/visitor-count.svg
 
       - name: Generate trophies (local)
-        uses: actions/github-script@v6
+        uses: actions/github-script@v8
         with:
           script: |
             const fs = require('fs');
